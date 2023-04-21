@@ -28,7 +28,7 @@ const Banner = () => {
 
   return (
     <div className="max-w-7xl mx-auto bg-white">
-      <div className="w-full bg-white px-4 pt-6 flex gap-4 border-b-[1px] pb-10">
+      <div className="w-full bg-white px-4 pt-6 flex gap-2 border-b-[1px] pb-10">
         {/* SLIDER */}
         <div className="w-2/3 rounded-lg h-[410px] relative shadow-bannerShadow">
           <Slider {...settings}>
@@ -114,6 +114,7 @@ const Banner = () => {
           </Slider>
         </div>
 
+        {/* FLASH PICK */}
         <div className="w-1/3 border-[1px] border-gray-200 rounded-lg shadow-bannerShadow p-4 flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-black">

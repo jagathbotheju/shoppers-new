@@ -11,7 +11,7 @@ import NavbarBottom from "./NavbarBottom";
 
 const Navbar = () => {
   return (
-    <div className="w-full bg-blue text-white">
+    <div className="w-full bg-blue text-white sticky top-0 z-50">
       {/* INNER CONTAINER */}
       <div className="border-b-[1px] border-b-white">
         <div className="mx-auto max-w-7xl h-20 px-4 flex items-center justify-between gap-2">
