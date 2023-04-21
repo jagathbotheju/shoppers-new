@@ -3,6 +3,7 @@ import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Banner from "./components/Banner";
+import Footer from "./components/Footer";
 
 export const metadata = {
   title: "Create Next App",
@@ -16,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-lightBlue">
+      <body className="bg-lightBlue min-h-screen flex flex-col">
         <Navbar />
-        <Banner />
-        {children}
+        <div className="flex flex-1 justify-center">{children}</div>
+        <Footer />
       </body>
     </html>
   );

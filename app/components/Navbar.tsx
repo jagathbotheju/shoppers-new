@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { logo } from "@/public/assets/images/index";
 import {
@@ -8,8 +9,12 @@ import {
 } from "react-icons/io5";
 import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import NavbarBottom from "./NavbarBottom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
+
   return (
     <div className="w-full bg-blue text-white sticky top-0 z-50">
       {/* INNER CONTAINER */}
@@ -17,7 +22,9 @@ const Navbar = () => {
         <div className="mx-auto max-w-7xl h-20 px-4 flex items-center justify-between gap-2">
           {/* LOGO */}
           <div className="navBarHover">
-            <Image className="w-44" src={logo} alt="logo" />
+            <Link href="/">
+              <Image className="w-44" src={logo} alt="logo" />
+            </Link>
           </div>
 
           {/* DEPARTMENT */}
@@ -63,7 +70,10 @@ const Navbar = () => {
           </div>
 
           {/* CART */}
-          <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative transition cursor-pointer">
+          <div
+            onClick={() => router.push("/cart")}
+            className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative transition cursor-pointer"
+          >
             <IoCartOutline className="text-2xl" />
             <p className="text-sm -mt-2">$0.00</p>
             <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center text-xs">
