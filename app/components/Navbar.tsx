@@ -11,9 +11,11 @@ import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useCart from "@/store/store";
 
 const Navbar = () => {
   const router = useRouter();
+  const cart = useCart((state) => state.cart);
 
   return (
     <div className="w-full bg-blue text-white sticky top-0 z-50">
@@ -76,8 +78,8 @@ const Navbar = () => {
           >
             <IoCartOutline className="text-2xl" />
             <p className="text-sm -mt-2">$0.00</p>
-            <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center text-xs">
-              0
+            <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center text-xs font-semibold">
+              {cart?.length || 0}
             </span>
           </div>
         </div>

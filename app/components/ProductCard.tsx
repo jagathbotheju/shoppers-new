@@ -1,13 +1,41 @@
+"use client";
 import { Product } from "@/type";
 import Image from "next/image";
+import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsStarFill } from "react-icons/bs";
+import useCart from "@/store/store";
+import { toast } from "react-hot-toast";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const addItemToCart = useCart((state) => state.addItemToCart);
+  const cart: Product[] = useCart((state) => state.cart);
+
+  const handleAddItemToCart = () => {
+    const newItem = {
+      ...product,
+      quantity: 1,
+    };
+    console.log(`new item in ProductCard ${JSON.stringify(newItem)}`);
+    addItemToCart({ newItem });
+    toast.success("Item added to Cart");
+  };
+
+  const isExist = () => {
+    let exist = false;
+    cart.map((item: Product, index: number) => {
+      //exist = item._id === product._id;
+      if (item._id === +product._id) exist = true;
+    });
+    return exist;
+  };
+
+  console.log(`isExist ${isExist()}`);
+
   return (
     <div className="flex flex-col drop-shadow-md group cursor-pointer rounded-md gap-2 bg-lightBlue">
       <div className="aspect-square w-full overflow-hidden h-48 relative">
@@ -24,18 +52,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="px-3 pb-3 flex flex-col">
         {/* BUTTONS */}
         <div className="flex justify-between py-1">
-          <button className="w-20 h-7 text-white rounded-full flex gap-1 items-center justify-center bg-blue hover:bg-[#004f9a] duration-300 transition">
+          <button
+            disabled={isExist()}
+            onClick={handleAddItemToCart}
+            className="w-20 h-7 text-white rounded-full flex gap-1 items-center justify-center bg-blue hover:bg-[#004f9a] duration-300 transition disabled:bg-gray-400"
+          >
             <span>
               <AiOutlinePlus fill="white" />
             </span>
             Add
           </button>
-          <button className="w-24 h-7 bg-white border-[1px] border-black text-black rounded-full flex items-center gap-1 hover:bg-black hover:text-white duration-300 transition justify-center">
-            <span>
-              <AiOutlinePlus />
-            </span>
-            Details
-          </button>
+          <Link
+            href={{
+              pathname: `/product/${product._id}`,
+              query: {
+                _id: product._id,
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                oldPrice: product.oldPrice,
+                brand: product.brand,
+                category: product.brand,
+                image: product.image,
+                isNew: product.isNew,
+              },
+            }}
+            //as={`/product/${product._id}`}
+          >
+            <button className="w-24 h-7 bg-white border-[1px] border-black text-black rounded-full flex items-center gap-1 hover:bg-black hover:text-white duration-300 transition justify-center">
+              <span>
+                <AiOutlinePlus />
+              </span>
+              Details
+            </button>
+          </Link>
         </div>
 
         <div className="flex items-center gap-3">
