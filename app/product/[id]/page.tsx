@@ -38,7 +38,7 @@ const ProductDetailsPage: React.FC<IProductDetailsPage> = ({
   const isExist = () => {
     let exist = false;
     cart.map((item: Product, index: number) => {
-      if (item._id === +product._id) exist = true;
+      if (+item._id === +product._id) exist = true;
     });
     return exist;
   };

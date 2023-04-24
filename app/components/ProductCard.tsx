@@ -6,6 +6,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { BsStarFill } from "react-icons/bs";
 import useCart from "@/store/store";
 import { toast } from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -15,26 +16,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const addItemToCart = useCart((state) => state.addItemToCart);
   const cart: Product[] = useCart((state) => state.cart);
 
+  const [clientCart, setClientCart] = useState<Product[]>([]);
+  useEffect(() => {
+    setClientCart(cart);
+  }, [cart]);
+
   const handleAddItemToCart = () => {
     const newItem = {
       ...product,
       quantity: 1,
     };
-    console.log(`new item in ProductCard ${JSON.stringify(newItem)}`);
+
     addItemToCart({ newItem });
     toast.success("Item added to Cart");
   };
 
   const isExist = () => {
     let exist = false;
-    cart.map((item: Product, index: number) => {
-      //exist = item._id === product._id;
-      if (item._id === +product._id) exist = true;
+    clientCart.map((item: Product, index: number) => {
+      if (+item._id === +product._id) exist = true;
     });
     return exist;
   };
-
-  console.log(`isExist ${isExist()}`);
 
   return (
     <div className="flex flex-col drop-shadow-md group cursor-pointer rounded-md gap-2 bg-lightBlue">

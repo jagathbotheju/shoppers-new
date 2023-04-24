@@ -12,10 +12,24 @@ import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useCart from "@/store/store";
+import { Product } from "@/type";
+import { useState, useEffect } from "react";
+import FormatAmount from "./FormatAmount";
 
 const Navbar = () => {
   const router = useRouter();
-  const cart = useCart((state) => state.cart);
+  const cart: Product[] = useCart((state) => state.cart);
+  const totalPrice = useCart((state) => state.totalPrice);
+
+  //console.log(`total price - ${totalPrice.toFixed(2)}`);
+
+  const [clientCart, setClientCart] = useState<Product[]>([]);
+  const [clientTotalPrice, setClientTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setClientCart(cart);
+    setClientTotalPrice(totalPrice);
+  }, [cart]);
 
   return (
     <div className="w-full bg-blue text-white sticky top-0 z-50">
@@ -77,9 +91,11 @@ const Navbar = () => {
             className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative transition cursor-pointer"
           >
             <IoCartOutline className="text-2xl" />
-            <p className="text-sm -mt-2">$0.00</p>
+            <p className="text-sm -mt-2">
+              <FormatAmount amount={clientTotalPrice} />
+            </p>
             <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center text-xs font-semibold">
-              {cart?.length || 0}
+              {clientCart?.length || 0}
             </span>
           </div>
         </div>
